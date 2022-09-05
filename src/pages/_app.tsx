@@ -1,14 +1,17 @@
-import type { AppProps } from 'next/app';
-import { Global } from '@emotion/react';
-import { globalStyles } from '@src/styles/globalStyles';
-import Head from 'next/head';
-import Navbar from '@src/components/organisms/Navbar';
-import { useRouter } from 'next/router';
-import { css } from '@emotion/css';
-import { useState, useEffect } from 'react';
+import type { AppProps } from "next/app";
+import { Global } from "@emotion/react";
+import { globalStyles } from "@src/styles/globalStyles";
+import Head from "next/head";
+import Navbar from "@src/components/organisms/Navbar";
+import { useRouter } from "next/router";
+import { css } from "@emotion/css";
+import { useState, useEffect } from "react";
+import Drawer from "@src/components/organisms/Drawer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { asPath } = useRouter();
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <>
@@ -25,8 +28,17 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
 
-      {asPath === '/' ? null : <Navbar />}
+      {asPath === "/" ? null : (
+        <Navbar
+          setDrawerOpen={(drawerOpen: boolean) => setDrawerOpen(drawerOpen)}
+        />
+      )}
       <Component {...pageProps} />
+      {drawerOpen && (
+        <Drawer
+          setDrawerOpen={(drawerOpen: boolean) => setDrawerOpen(drawerOpen)}
+        />
+      )}
     </>
   );
 }

@@ -1,34 +1,35 @@
-import { css } from '@emotion/css';
-import React from 'react';
-import DrawerList from '@src/components/molecules/DrawerList';
-import { useState, useEffect } from 'react';
-import { workoutList } from '@src/constants/mockData';
+import { css } from "@emotion/css";
+import React, { useRef } from "react";
+import DrawerList from "@src/components/molecules/DrawerList";
+import { useState, useEffect } from "react";
+import { workoutList } from "@src/constants/mockData";
 
 interface Drawer {
-  open: boolean;
-  _backdropRef: any;
+  setDrawerOpen: (drawerOpen: boolean) => void;
 }
 
 export default function Drawer(props: Drawer) {
-  const { open, _backdropRef } = props;
-
-  if (open)
-    return (
-      <div className={styleRoot}>
-        <div className="backdrop" ref={_backdropRef} />
-        <div className="drawer-contents">
-          {workoutList.map((v, i) => (
-            <DrawerList
-              key={`${v.name}-${i}`}
-              name={v.name}
-              totalNumber={v.totalNumber}
-              number={v.number}
-            />
-          ))}
-        </div>
+  return (
+    <div className={styleRoot}>
+      <div
+        className="backdrop"
+        onClick={() => {
+          console.log("backdrop");
+          props.setDrawerOpen(false);
+        }}
+      />
+      <div className="drawer-contents">
+        {workoutList.map((v, i) => (
+          <DrawerList
+            key={`${v.name}-${i}`}
+            name={v.name}
+            totalNumber={v.totalNumber}
+            number={v.number}
+          />
+        ))}
       </div>
-    );
-  else return <></>;
+    </div>
+  );
 }
 
 const styleRoot = css`
